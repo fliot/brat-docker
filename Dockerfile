@@ -4,6 +4,7 @@ MAINTAINER Cass Johnston <cassjohnston@gmail.com>
 
 # set users cfg file
 ARG USERS_CFG=users.json
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Install pre-reqs
 RUN apt-get update
@@ -25,10 +26,6 @@ RUN chown -R www-data:www-data /bratdata /bratcfg
 RUN chmod o-rwx /bratdata /bratcfg
 RUN ln -s /bratdata /var/www/brat/brat-v1.3_Crunchy_Frog/data
 RUN ln -s /bratcfg /var/www/brat/brat-v1.3_Crunchy_Frog/cfg 
-
-# And make that location a volume
-VOLUME /bratdata
-VOLUME /bratcfg
 
 ADD brat_install_wrapper.sh /usr/bin/brat_install_wrapper.sh
 RUN chmod +x /usr/bin/brat_install_wrapper.sh
