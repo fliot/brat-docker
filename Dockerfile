@@ -40,7 +40,7 @@ ADD user_patch.py /var/www/brat/user_patch.py
 # Enable cgi
 RUN a2enmod cgi
 
-EXPOSE 80
+EXPOSE 9493
 
 # We can't use apachectl as an entrypoint because it starts apache and then exits, taking your container with it. 
 # Instead, use supervisor to monitor the apache process
