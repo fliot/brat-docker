@@ -7,7 +7,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install pre-reqs
 RUN apt-get update
-RUN apt-get install -y apache2 git python supervisor
+RUN apt-get -y upgrade
+RUN apt-get install -y apache2 git python supervisor wget
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -46,8 +47,3 @@ RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf 
 
 CMD ["/usr/bin/supervisord"]
-
-
-
-
-

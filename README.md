@@ -1,34 +1,45 @@
 # :hatching_chick: brat docker
 
 This is a docker container deploying an instance of [brat](http://brat.nlplab.org/).
+Initially from [cassj](https://github.com/cassj/brat-docker)
+Forked by [babylonhealth](https://github.com/babylonhealth/brat-docker)
+And re-forked by [me](https://github.com/fliot/brat-docker)
 
+# :warning: brat version
+Warning, the brat packed/installed version is a realtime *git clone https://github.com/nlplab/brat.git master/HEAD*
 
-### Installation
+### Build and Installation
 
 Use the build command to create a docker image locally.
-
 ```bash
-make build
+docker build -t brat-docker .
 ```
 
-The `brat-data` folder contains your annotation data, and the `brat-cfg` contains a file called `users.json`.
-To add multiple users to the server use `users.json` to list your users and their passwords like so:
+now, dive into the image filesystem(s), install your collections (example from http://www.nactem.ac.uk/phenotype/download.php), and define users & passwords:
+```bash
+docker run --name=brat-docker -it -v $PWD/brat-data:/bratdata -v $PWD/brat-cfg:/bratcfg brat-docker /bin/bash
 
-```json
-{
+cd /bratdata
+wget http://www.nactem.ac.uk/phenotype/PhenoCHF-corpus.tar.gz
+tar -zxvf PhenoCHF-corpus.tar.gz
+
+cd /bratcfg
+echo """{
     "user1": "password",
-    "user2": "password",
-    ...
-}
-```
+    "user2": "password"
+}""" > users.json
+exit
 
-The data in these directories will persist even after stopping or removing the container.
+docker rm brat-docker
+```
 
 ### Running
 
-To run the container:
+To run the container you need to specify a username, password and email address for BRAT as environment variables when you start the container. This user will have editor permissions.
 ```bash
-make run
-```
+docker run --name=brat -d --name brat-docker -p 8888:80 -v $PWD/brat-data:/bratdata -v $PWD/brat-cfg:/bratcfg -e BRAT_USERNAME=brat -e BRAT_PASSWORD=brat -e BRAT_EMAIL=brat@example.com brat-docker
 
-You can edit the Makefile to specify local port (`-p X:80`), brat username or brat password.
+docker logs -f brat-docker
+docker container stop brat-docker
+docker container rm brat-docker
+```
