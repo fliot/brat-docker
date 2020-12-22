@@ -1,9 +1,8 @@
 # :hatching_chick: brat docker
 
 This is a docker container deploying an instance of [brat](http://brat.nlplab.org/).
-Initially from [cassj](https://github.com/cassj/brat-docker)
-Forked by [babylonhealth](https://github.com/babylonhealth/brat-docker)
-And re-forked by [me](https://github.com/fliot/brat-docker)
+
+Docker image initially from [cassj](https://github.com/cassj/brat-docker), forked by [babylonhealth](https://github.com/babylonhealth/brat-docker) and re-forked by [me](https://github.com/fliot/brat-docker)
 
 # :warning: brat version
 Warning, the brat packed/installed version is a realtime *git clone https://github.com/nlplab/brat.git master/HEAD*
